@@ -22,9 +22,9 @@ minetest.register_chatcommand("mute", {
         if not tonumber(time) then
             return false, "time is not a number"
         end
-        muted[param] = true
+        muted[target] = true
         minetest.after(time*60, function()
-            muted[param] = nil
+            muted[target] = nil
         end)
         return true, param .. " was muted for " .. time .. " minutes"
     end,
