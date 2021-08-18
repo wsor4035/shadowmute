@@ -3,10 +3,30 @@ minetest.register_chatcommand("shadowmute", {
     privs = {server = true},
     func = function(name, param)
         if not minetest.get_player_by_name(param) then
-            return minetest.chat_send_player(name, "player is not online/ does not exist")
+            return false, "player is not online/ does not exist"
         end
         muted[param] = true
-        return true, minetest.chat_send_player(name, param .. " was shadow muted")
+        return true, param .. " was shadow muted"
+    end,
+})
+
+minetest.register_chatcommand("mute", {
+    privs = {server = true},
+    func = function(name, param)
+        local target, time = param:match("(%S+)%s+(.+)")
+        if not target and not time then
+            return false, "target or time not given"
+        elseif not minetest.get_player_by_name(target) then
+            return false, "player is not online/ does not exist"
+        end
+        if not tonumber(time) then
+            return false, "time is not a number"
+        end
+        muted[param] = true
+        minetest.after(time*60, function()
+            muted[param] = nil
+        end)
+        return true, param .. " was muted for " .. time .. " minutes"
     end,
 })
 
@@ -14,10 +34,17 @@ minetest.register_chatcommand("unshadowmute", {
     privs = {server = true},
     func = function(name, param)
         if not minetest.get_player_by_name(param) then
-            return minetest.chat_send_player(name, "player is not online/ does not exist")
+            return true, "player is not online/ does not exist"
         end
-        muted[param] = false
-        return true, minetest.chat_send_player(name, param .. " was unshadow muted")
+        muted[param] = nil
+        return true, param .. " was unmuted"
+    end,
+})
+
+minetest.register_chatcommand("unmute", {
+    privs = {server = true},
+    func = function(name, param)
+        return minetest.registered_chatcommands["unshadowmute"].func(name, param)
     end,
 })
 
@@ -45,8 +72,8 @@ if minetest.registered_chatcommands["msg"] then
                 end
                 if name == dest then
                     minetest.chat_send_player(name, "DM from " .. name .. ": " .. msg)
-                    return true, "Message sent."
                 end
+                return true, "Message sent."
             else
                 return old_func(name, param)
             end
