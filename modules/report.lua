@@ -15,7 +15,8 @@ minetest.register_chatcommand("report", {
         local data = {
             content = nil,
             embeds = {{
-                description = name .. " reports: " .. param,
+                title = name .. " reports:",
+                description = param,
                 color = 5763719
             }}
         }
