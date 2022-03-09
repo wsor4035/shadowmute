@@ -48,7 +48,7 @@ minetest.register_chatcommand("unmute", {
     end,
 })
 
-minetest.register_on_chat_message(function(name, message)
+local function on_chat_message(name, message)
     if muted[name] then
         --if minetest.global_exists("cloaking") then cloaking.chat.send(name .. "[shadowmuted]: " .. message) end
         minetest.chat_send_player(name, name .. ": " .. message)
@@ -56,7 +56,9 @@ minetest.register_on_chat_message(function(name, message)
     else
         return false
     end
-end)
+end
+
+table.insert(minetest.registered_on_chat_messages, 1, on_chat_message)
 
 if minetest.registered_chatcommands["msg"] then
     local old_func = minetest.registered_chatcommands["msg"].func

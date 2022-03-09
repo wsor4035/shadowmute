@@ -5,7 +5,7 @@ local extensions = {
     ".mp4", ".ogg", ".flac", ".mov",
 }
 
-minetest.register_on_chat_message(function(name, message)
+local function on_chat_message(name, message)
     if message:find("http") then
         for _, ext in pairs(extensions) do
             if message:find(ext) then
@@ -20,4 +20,6 @@ minetest.register_on_chat_message(function(name, message)
     else
         return false
     end
-end)
+end
+
+table.insert(minetest.registered_on_chat_messages, 1, on_chat_message)

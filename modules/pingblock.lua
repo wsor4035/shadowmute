@@ -1,4 +1,4 @@
-minetest.register_on_chat_message(function(name, message)
+local function on_chat_message(name, message)
     local _, count = message:gsub("<@%d+>", "")
     if count and count > 3 then
         minetest.chat_send_player(
@@ -9,4 +9,6 @@ minetest.register_on_chat_message(function(name, message)
     else
         return false
     end
-end)
+end
+
+table.insert(minetest.registered_on_chat_messages, 1, on_chat_message)
