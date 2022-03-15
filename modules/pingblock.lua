@@ -1,5 +1,5 @@
 local function on_chat_message(name, message)
-    local _, count = message:gsub("<@%d+>", "")
+    local _, count = message:gsub("<@!*%d+>", "")
     if count and count > 3 then
         minetest.chat_send_player(
             name,
