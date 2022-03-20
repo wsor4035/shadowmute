@@ -1,8 +1,8 @@
 local extensions = {
-    ".jpg", ".jpeg", ".JPG", ".JPEG",
-    ".png", ".PNG", ".gif", ".gifv",
-    ".webm", ".mp4", ".wav", ".mp3",
-    ".mp4", ".ogg", ".flac", ".mov",
+    "%.jpg", "%.jpeg", "%.JPG", "%.JPEG",
+    "%.png", "%.PNG", "%.gif", "%.gifv",
+    "%.webm", "%.mp4", "%.wav", "%.mp3",
+    "%.mp4", "%.ogg", "%.flac", "%.mov",
 }
 
 local function on_chat_message(name, message)
