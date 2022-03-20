@@ -1,9 +1,9 @@
 local function on_chat_message(name, message)
-    local _, count = message:gsub("<@!*%d+>", "")
-    if count and count > 3 then
+    local _, count = message:gsub("<@.+>", "")
+    if count and count >= 1 then
         minetest.chat_send_player(
             name,
-            minetest.colorize("red", "sorry, pinging more than 3 discord users is disallowed")
+            minetest.colorize("red", "sorry, pinging discord users or roles is disallowed")
         )
         return true
     else
