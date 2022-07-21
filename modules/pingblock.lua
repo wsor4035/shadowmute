@@ -1,6 +1,7 @@
 local function on_chat_message(name, message)
     local _, count = message:gsub("<@.+>", "")
-    if (count and count >= 1) or message:find("discord.gg") then
+    local _, count2 = message:gsub("@.+", "")
+    if (count and count >= 1) or message:find("discord.gg") or (count2 and count2 >= 1) then
         minetest.chat_send_player(
             name,
             minetest.colorize("red", "sorry, pinging discord users or roles is disallowed")
