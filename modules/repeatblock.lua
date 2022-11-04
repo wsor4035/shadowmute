@@ -1,3 +1,5 @@
+local modname = minetest.get_current_modname()
+local timeout = minetest.settings:get(modname .. ".repeat_timeout") or 60
 local cache = {}
 
 local function on_chat_message(name, message)
@@ -9,6 +11,9 @@ local function on_chat_message(name, message)
         return true
     else
         cache[name] = message
+        minetest.after(timeout, function()
+                cache[name] = nil
+        end)
         return false
     end
 end
