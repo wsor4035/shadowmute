@@ -1,1 +1,2 @@
 shadowmute.report.discord_url (discord webhook url) string
+shadowmute.repeat_timeout (Timeout between repeating messages) int 60
