@@ -5,12 +5,15 @@ local command_whitelist = {
     ["/who"] = true,
     ["/home"]=true,
     ["/help"]=true,
+    ["//pos1"]=true,
+    ["//pos2"]=true,
+    ["//p"]=true,
 }
 
 local function on_chat_message(name, message)
     if (cache[name] and cache[name]==message) then
         local command = message:split(" ")[1]
-        if(minetest.registered_chatcommands[command] and command_whitelist[command]) then
+        if(minetest.registered_chatcommands[command:sub(2)] and command_whitelist[command]) then
             cache[name] = nil
             return false
         end
