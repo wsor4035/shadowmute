@@ -1,19 +1,15 @@
 local cache = {}
 
-local command_whitelist = {
-    ["/spawn"] = true,
-    ["/who"] = true,
-    ["/home"]=true,
-    ["/help"]=true,
-    ["//pos1"]=true,
-    ["//pos2"]=true,
-    ["//p"]=true,
+local command_blacklist = {
+    ["/m"] = true,
+    ["/msg"] = true,
+    ["/tell"]=true,
 }
 
 local function on_chat_message(name, message)
     if (cache[name] and cache[name]==message) then
         local command = message:split(" ")[1]
-        if(minetest.registered_chatcommands[command:sub(2)] and command_whitelist[command]) then
+        if(minetest.registered_chatcommands[command:sub(2)] and not command_blacklist[command]) then
             cache[name] = nil
             return false
         end
